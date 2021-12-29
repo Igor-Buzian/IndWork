@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды от Совкова Игоря Михайловича</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- <script src="assets/js/angularJs.js"></script> -->
+    <script src="assets/js/main.js"></script>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body ng-app="prognoz" ng-controller="progCtrl">
+    <!-- Sign UP -->
+    <div class="signUpForm" id="signUpForm" ng-init="isSignIn = false">
+        <span class="close">x</span>
+        <form ng-submit="signUp()">
+            <h1>Регистрация</h1>
+            <label for="su_login">Логин: </label><input type="text" id="su_login" ng-model="su_inputLogin" required><br>
+            <label for="su_pass">Пароль: </label><input type="password" id="su_pass" ng-model="su_inputPass" required><br>
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+    </div>
+    <!-- Sign IN -->
+    <div class="signInForm" id="signInForm">
+        <span class="close">x</span>
+        <form ng-submit="signIn()">
+            <h1>Авторизация</h1>
+            <label for="si_login">Логин: </label><input type="text" id="si_login" ng-model="si_inputLogin" required><br>
+            <label for="si_pass">Пароль: </label><input type="password" id="si_pass" ng-model="si_inputPass" required><br>
+            <input type="submit" value="Войти">
+        </form>
+    </div>
+    <div class="overflow" id="overflow"></div>
+    <!-- HEADER -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.png" alt="Лого">
+        </a>
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li class="actual">Прогноз погоды</li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li class="signUpButt" ng-show="!isSignIn">Регистрация</li>
+                <li class="signInButt" ng-show="!isSignIn">Вход</li>
+                <li ng-hide="!isSignIn" class="viewAccounts">Аккаунты</li>
+                <li class="logOutButt" ng-hide="!isSignIn" ng-click="isSignIn = false">Выход</li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Page Content -->
+    <div class="wrap">
+        <!-- Accounts -->
+        <div class="accounts">
+            <span class="close">x</span>
+            <table border="1">
+                <tr>
+                    <th>Логин</th>
+                    <th>Пароль</th>
+                </tr>
+                <tr ng-repeat="x in accounts">
+                    <td><span ng-bind="x.login"></span></td>
+                    <td><span ng-bind="x.password"></span></td>
+                </tr>
+            </table>
+        </div>
+        <form ng-show="isSignIn" name="prognozForm">
+            <input type="text" ng-model="City" name="City" placeholder="Город" required>
+            <span ng-show="prognozForm.City.$dirty && prognozForm.City.$invalid && prognozForm.City.$error.required" ng-focus="count1 = count1 + 1" ng-init="count1=0">Field is required.</span><br>
+
+            <input type="text" ng-model="Meedle" name="Meedle" placeholder="Средняя" required>
+            <span ng-show="prognozForm.Meedle.$dirty && prognozForm.Meedle.$invalid && prognozForm.Meedle.$error.required">Field is required.</span><br>
+
+            <input type="text" ng-model="Morning" name="Morning" placeholder="Утром" required>
+            <span ng-show="prognozForm.Morning.$dirty && prognozForm.Morning.$invalid && prognozForm.Morning.$error.required">Field is required.</span><br>
+
+            <input type="text" ng-model="Night" name="Night" placeholder="Ночью" required>
+            <span ng-show="prognozForm.Night.$dirty && prognozForm.Night.$invalid && prognozForm.Night.$error.required">Field is required.</span><br>
+
+            <input type="submit" value="Добавить прогноз" ng-click="prognozAdd()" ng-disabled="prognozForm.$invalid">
+            <span ng-if="!prognozForm.$invalid">Прогноз может быть добавлен</span>
+        </form><br>
+        <table border="1">
+            <tr>
+                <th>Город</th>
+                <th>Средняя</th>
+                <th>Утром</th>
+                <th>Ночью</th>
+                <th ng-show="isSignIn">Удалить</th>
+            </tr>
+            <tr ng-repeat="x in prognozList | orderBy : x.City">
+                <td>{{x.City}}</td>
+                <td>{{x.Meedle}}</td>
+                <td>{{x.Morning}}</td>
+                <td>{{x.Night}}</td>
+                <td class="td-butt" ng-show="isSignIn"><button ng-click="prognozRemove(x.City)">Удалить</button></td>
+            </tr>
+        </table>
+    </div>
+    <footer>
+        <span>© 2021 Copyright by Sovok</span>
+    </footer>
+</body>
+</html>

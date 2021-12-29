@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Государственная Больница Им. Квантора Г.</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- <script src="assets/js/angularJs.js"></script> -->
+    <script src="assets/js/main.js"></script>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body ng-app="prognoz" ng-controller="progCtrl">
+    <!-- Sign UP -->
+    <div class="signUpForm" id="signUpForm" ng-init="isSingIn = false">
+        <span class="close">x</span>
+        <form ng-submit="signUp()">
+            <h1>Регистрация</h1>
+            <label for="su_login">Логин: </label><input type="text" id="su_login" ng-model="su_inputLogin" required><br>
+            <label for="su_pass">Пароль: </label><input type="password" id="su_pass" ng-model="su_inputPass" required><br>
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+    </div>
+    <!-- Sign IN -->
+    <div class="signInForm" id="signInForm">
+        <span class="close">x</span>
+        <form ng-submit="signIn()">
+            <h1>Авторизация</h1>
+            <label for="si_login">Логин: </label><input type="text" id="si_login" ng-model="si_inputLogin" required><br>
+            <label for="si_pass">Пароль: </label><input type="password" id="si_pass" ng-model="si_inputPass" required><br>
+            <input type="submit" value="Войти">
+        </form>
+    </div>
+    <div class="overflow" id="overflow"></div>
+    <!-- HEADER -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.png" alt="Лого">
+        </a>
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="hosp.html">Прогноз погоды</a></li>
+                <li class="actual">Контакты</li>
+                <li class="signUpButt" ng-show="!isSignIn">Регистрация</li>
+                <li class="signInButt" ng-show="!isSignIn">Вход</li>
+                <li ng-hide="!isSignIn" class="viewAccounts">Аккаунты</li>
+                <li class="logOutButt" ng-hide="!isSignIn" ng-click="isSignIn = false">Выход</li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Page Content -->
+    <div class="wrap">
+        <!-- Accounts -->
+        <div class="accounts">
+            <span class="close">x</span>
+            <table border="1">
+                <tr>
+                    <th>Логин</th>
+                    <th>Пароль</th>
+                </tr>
+                <tr ng-repeat="x in accounts">
+                    <td>{{x.login}}</td>
+                    <td>{{x.password}}</td>
+                </tr>
+            </table>
+        </div>
+        <h1>Наши контакты:</h1>
+        <p>Телефон: 1-488-148-88-88</p>
+        <p>Адрес: Секрет, но за +1 балл расскажу)) </p>
+        <p>E-mail: Sovock@au.au</p>
+    </div>
+    <footer>
+        <span>© 2021 Copyright by Sovok</span>
+    </footer>
+</body>
+</html>
