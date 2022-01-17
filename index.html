@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды Gismeteo.md</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- <script src="assets/js/angularJs.js"></script> -->
+    <script src="assets/js/main.js"></script>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body ng-app="prognoz" ng-controller="progCtrl">
+    <!-- Sign UP -->
+    <div class="signUpForm" id="signUpForm" ng-init="isSingIn = false">
+        <span class="close">x</span>
+        <form ng-submit="signUp()">
+            <h1>Регистрация</h1>
+            <label for="su_login">Логин: </label><input type="text" id="su_login" ng-model="su_inputLogin" required><br>
+            <label for="su_pass">Пароль: </label><input type="password" id="su_pass" ng-model="su_inputPass" required><br>
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+    </div>
+    <!-- Sign IN -->
+    <div class="signInForm" id="signInForm">
+        <span class="close">x</span>
+        <form ng-submit="signIn()">
+            <h1>Авторизация</h1>
+            <label for="si_login">Логин: </label><input type="text" id="si_login" ng-model="si_inputLogin" required><br>
+            <label for="si_pass">Пароль: </label><input type="password" id="si_pass" ng-model="si_inputPass" required><br>
+            <input type="submit" value="Войти">
+        </form>
+    </div>
+    <div class="overflow" id="overflow"></div>
+    <!-- HEADER -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.png" alt="Лого">
+        </a>
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li class="actual">Главная</li>
+                <li><a href="hosp.html">Прогноз погоды</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+                <li class="signUpButt" ng-show="!isSignIn">Регистрация</li>
+                <li class="signInButt" ng-show="!isSignIn">Вход</li>
+                <li ng-hide="!isSignIn" class="viewAccounts">Аккаунты</li>
+                <li class="logOutButt" ng-hide="!isSignIn" ng-click="isSignIn = false">Выход</li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Page Content -->
+    <div class="wrap">
+        <!-- Accounts -->
+        <div class="accounts">
+            <span class="close">x</span>
+            <table border="1">
+                <tr>
+                    <th>Логин</th>
+                    <th>Пароль</th>
+                </tr>
+                <tr ng-repeat="x in accounts">
+                    <td>{{x.login}}</td>
+                    <td>{{x.password}}</td>
+                </tr>
+            </table>
+            <hr>
+        </div>
+        <!-- aboutUs -->
+        <h1>О нас</h1>
+        <p ng-mouseover = "count = count + 1" ng-copy="count = count + 1" ng-cut="count = count + 1" ng-init="count=0">
+       Самый точный прогноз на картах Таро! <br> Узнай своё будущее и погоду вместе с нами!!! </p>
+         <div class="exchangeRates"><br>
+            <div class="exch">
+                <h1>Актуальные курсы валют</h1>
+                MDL: <input type="number" ng-model="mdl" ng-init="mdl=1"><br>
+                <span>RUB: {{mdl * exch[1].value}}</span><br>
+                <span>DOLLAR: {{mdl * exch[2].value}}</span><br>
+                <span>DOLLAR: {{mdl * exch[3].value}}</span><br>
+                <span>DOLLAR: {{mdl * exch[4].value}}</span>
+            </div>
+            <span ng-non-bindable>ng-non-bindable: {{count}}</span>
+            copy and mouseover count: {{count}}
+         </div>
+         <my-directive></my-directive>
+         <ng-include src="include.html"></ng-include>
+         <h2>limitTo: {{longNum | limitTo: 4}}</h2>
+    </div>
+    <hr>
+
+    <form name="myForm">
+        <label>Value1:
+          <input type="checkbox" ng-model="checkboxModel.value1">
+        </label><br/>
+        <label>Value2:
+          <input type="checkbox" ng-model="checkboxModel.value2">
+         </label><br/>
+        <span>value1 = {{checkboxModel.value1}}</span><br/>
+        <span>value2 = {{checkboxModel.value2}}</span><br/>
+
+        <hr>
+
+        <label>
+            <input type="radio" ng-model="color.name" value="red">
+            Red
+        </label><br/>
+        <label>
+            <input type="radio" ng-model="color.name" value="green">
+            Green
+        </label><br/>
+        <label>
+            <input type="radio" ng-model="color.name" value="blue">
+            Blue
+        </label><br/>
+        <span>color = {{color.name | json}}</span><br/>
+
+        <hr>
+
+        <label for="singleSelect"> Select option: </label><br>
+        <select name="singleSelect" ng-model="data.singleSelect">
+            <option value="option-1">Option 1</option>
+            <option value="option-2">Option 2</option>
+        </select><br>
+        <span>singleSelect = {{data.singleSelect}}</span>
+
+    </form>
+
+    <footer>
+        <span>© 2021 Copyright by Sovock</span>
+    </footer>
+</body>
+</html>
